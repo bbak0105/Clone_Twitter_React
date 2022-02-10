@@ -1,7 +1,7 @@
 import { authService, firebaseInstance } from "fbase";
 import React, { useState } from "react";
 
-// 자동으로 import 하는 법!
+// 자동으로 import 하는 법! 안녕!!
 const Auth = () => {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
