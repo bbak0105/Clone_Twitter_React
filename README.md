@@ -1,70 +1,69 @@
-# Getting Started with Create React App
+# [Frontend Clone Coding] 트위터 클론 코딩
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## 📌 Development Environment
+React, Firebase
 
-## Available Scripts
+## 📌 Technology Used
+### `Login`
+> ✏️ [Social Login (github, google)]()
+> 소셜 아이디로 로그인 할 수 있습니다.
 
-In the project directory, you can run:
+```javascript
+const onSocialClick = async (e) => {
+    const { target: { name } } = e;
+    let provider;
+    if (name === "google") {
+        provider = new firebaseInstance.auth.GoogleAuthProvider();
+    } else if (name === "github") {
+        provider = new firebaseInstance.auth.GithubAuthProvider();
+    }
+    await authService.signInWithPopup(provider);
+}
+```
+<br/>
 
-### `npm start`
+> ✏️ [Social Login (github, google)]()
+> 유저가 존재하면 로그인, 존재하지 않으면 계정을 생성합니다.
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+```javascript
+const onSubmit = async (e) => {
+  e.preventDefault(); //새로고침을 방지한다.
+  try {
+      let data;
+      if (newAccount) { //create account
+          // createUserWithEmailAndPassword 는 Promise를 리턴하므로 비동기 await으로 받아줘야한다.
+          await authService.createUserWithEmailAndPassword(email, password);
+      } else { //log in
+          await authService.signInWithEmailAndPassword(email, password);
+      } // 사용자가 만들어지고 파이어베이스에 적혀있다.
+  } catch (error) {
+      setError(error.message);
+  }
+};
+```
+<br/>
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+> ✏️ [Confirm User]()
+> 유저가 존재하면 로그인, 존재하지 않으면 계정을 생성합니다.
 
-### `npm test`
+```javascript
+const [init, setInit] = useState(false);
+const [userObj, setUserObj] = useState(null);
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+useEffect(() => {
+  // 사용자가 로그인 되어있는지 로그아웃 상태인지 확인해준다.
+  authService.onAuthStateChanged((user) => {
+    if (user) {
+      setUserObj(user);
+    }
+    setInit(true); // setInit 이 false이면 로딩창을 띄운다.
+  })
+}, []); 
 
-### `npm run build`
-
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
-
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+return (
+  <>
+    {init ? <AppRouter isLoggedIn={Boolean(userObj)} userObj={userObj} /> : "Initializing ..."}
+  </>
+ );
+```
+<br/>
