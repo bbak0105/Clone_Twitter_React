@@ -1,7 +1,6 @@
 # [Frontend Clone Coding] 트위터 클론 코딩
 
 ### 📌 Development Environment
-React, Firebase
 <img src="/Images/ReactPng.png" width="100px" height="100px"></img>
 <img src="/Images/firebase.png" width="200px" height="100px"></img>
 
