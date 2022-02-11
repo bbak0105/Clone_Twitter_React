@@ -1,9 +1,11 @@
 # [Frontend Clone Coding] 트위터 클론 코딩
 
-## 📌 Development Environment
+### 📌 Development Environment
 React, Firebase
 
-## 📌 Technology Used
+<br/>
+
+### 📌 Technology Used
 ### `Login`
 > ✏️ [Social Login (github, google)]()
 > 소셜 아이디로 로그인 할 수 있습니다.
