@@ -22,10 +22,12 @@ function App() {
   // onAuthStateChanged : 사용자의 로그인 상태의 변화를 관찰하는 관찰자를 추가시킨다.
   const [init, setInit] = useState(false);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [userObj, setUserObj] = useState(null);
   useEffect(() => {
     authService.onAuthStateChanged((user) => {
       if (user) {
         setIsLoggedIn(true);
+        setUserObj(user);
       } else {
         setIsLoggedIn(false);
       }
@@ -34,7 +36,7 @@ function App() {
   }, []); // 빈 배열을 넣었으므로 componentDidMount 처럼 작동한다. 
   return (
     <>
-      {init ? <AppRouter isLoggedIn={isLoggedIn} /> : "Initializing ..."}
+      {init ? <AppRouter isLoggedIn={isLoggedIn} userObj={userObj} /> : "Initializing ..."}
       <footer>&copy; {new Date().getFullYear()} Nwitter</footer>
     </>
   );
