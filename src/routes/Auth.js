@@ -5,7 +5,7 @@ import React, { useState } from "react";
 const Auth = () => {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
-    const [newAccount, setNewAccoount] = useState(true);
+    const [newAccount, setNewAccoount] = useState(false);
     const [error, setError] = useState("");
     const onChange = (e) => {
         //구조분해 -> e.target.name / e.target.value
@@ -76,7 +76,7 @@ const Auth = () => {
                 />
             </form>
             {error}
-            <span onClick={toggleAccoount}>{newAccount ? "Sign in" : "Create Account"}</span>
+            <button onClick={toggleAccoount}>{newAccount ? "Sign in" : "Create Account"}</button>
             <div>
                 <button name="google" onClick={onSocialClick}>Continue with Google</button>
                 <button name="github" onClick={onSocialClick}>Continue with Github</button>

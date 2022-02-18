@@ -18,20 +18,6 @@ const Home = ({ userObj }) => {
             setNweets(nweetArray);
         })
     }, []);
-    // submit 할 때마다 파이어베이스에 생성할 것이야!
-    const onSubmit = async (e) => {
-        e.preventDefault();
-        // 작동방식은 collection과 비슷해!
-        const fileRef = storageService.ref().child(`${userObj.uid}/${uuidv4()}`);
-        const response = await fileRef.putString(attatchment, "data_url");
-        console.log(response);
-        // await dbService.collection("nweets").add({ //Promise를 리턴하므로 async - await
-        //     text: nweet,
-        //     createdAt: Date.now(),
-        //     creatorId: userObj.uid
-        // });
-        // setNweet(""); // 작성뒤에 비워주기
-    }
     const onChange = (e) => {
         const { target: { value } } = e;
         setNweet(value);
@@ -45,6 +31,23 @@ const Home = ({ userObj }) => {
             const { currentTarget: { result } } = finishedEvent;
             setAttatchment(result);
         }
+    }
+    // submit 할 때마다 파이어베이스에 생성할 것이야!
+    const onSubmit = async (e) => {
+        e.preventDefault();
+        // 작동방식은 collection과 비슷해! collection에 child를 가지는 것!
+        const fileRef = storageService.ref().child(`${userObj.uid}/${uuidv4()}`); //uuidv4()는 파일에 랜덤 이름을 부여하는 것이다.
+        //userObj는 App의 onAuthStateChanged에서 넘어온 user 정보의 uid (고유의 값 아이디)
+        const response = await fileRef.putString(attatchment, "data_url"); //putString 은 upload랑 비슷한 개념
+        console.log(response);
+        /*
+        await dbService.collection("nweets").add({ //Promise를 리턴하므로 async - await
+            text: nweet,
+            createdAt: Date.now(),
+            creatorId: userObj.uid
+        });
+        setNweet(""); // 작성뒤에 비워주기
+        */
     }
     const onClearPhotoClick = () => {
         setAttatchment(null);
